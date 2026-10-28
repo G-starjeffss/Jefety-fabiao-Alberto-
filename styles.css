@@ -3,52 +3,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>World Clock</title>
+    <title>TodoFlow</title>
+    <meta name="description" content="TodoFlow is a local-first to-do list app with filtering, priorities, due dates, and local storage support." />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="app-shell">
-      <header class="header">
-        <p class="eyebrow">Global time</p>
-        <h1>World Clock</h1>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Personal productivity</p>
+          <h1>TodoFlow</h1>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+          Dark mode
+        </button>
       </header>
 
-      <main class="clock-grid">
-        <section class="clock-card primary-card">
-          <div class="card-label">Local time</div>
-          <div id="localTime" class="time-value">--:--:--</div>
-          <div id="localDate" class="date-value">Loading...</div>
-        </section>
+      <main class="panel">
+        <form id="todoForm" class="todo-form">
+          <label class="field task-field">
+            <span>Task</span>
+            <input id="taskInput" type="text" maxlength="140" placeholder="Add a new task..." autocomplete="off" required />
+          </label>
 
-        <section class="clock-card">
-          <div class="card-label">UTC</div>
-          <div id="utcTime" class="time-value">--:--:--</div>
-          <div id="utcDate" class="date-value">Loading...</div>
-        </section>
+          <label class="field">
+            <span>Priority</span>
+            <select id="prioritySelect">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
 
-        <section class="clock-card">
-          <div class="card-label">New York</div>
-          <div id="newYorkTime" class="time-value">--:--:--</div>
-          <div id="newYorkDate" class="date-value">Loading...</div>
-        </section>
+          <label class="field">
+            <span>Due date</span>
+            <input id="dueDateInput" type="date" />
+          </label>
 
-        <section class="clock-card">
-          <div class="card-label">London</div>
-          <div id="londonTime" class="time-value">--:--:--</div>
-          <div id="londonDate" class="date-value">Loading...</div>
-        </section>
+          <button class="primary-btn" type="submit">Add task</button>
+        </form>
 
-        <section class="clock-card">
-          <div class="card-label">Dubai</div>
-          <div id="dubaiTime" class="time-value">--:--:--</div>
-          <div id="dubaiDate" class="date-value">Loading...</div>
-        </section>
+        <div class="toolbar">
+          <div class="stats">
+            <span><strong id="remainingCount">0</strong> remaining</span>
+            <span><strong id="completedCount">0</strong> completed</span>
+          </div>
 
-        <section class="clock-card">
-          <div class="card-label">Tokyo</div>
-          <div id="tokyoTime" class="time-value">--:--:--</div>
-          <div id="tokyoDate" class="date-value">Loading...</div>
-        </section>
+          <div class="filters" aria-label="Filter tasks">
+            <button class="filter-btn active" type="button" data-filter="all">All</button>
+            <button class="filter-btn" type="button" data-filter="active">Active</button>
+            <button class="filter-btn" type="button" data-filter="completed">Completed</button>
+          </div>
+        </div>
+
+        <div class="list-shell">
+          <ul id="todoList" class="todo-list" aria-live="polite"></ul>
+        </div>
+
+        <div class="footer-actions">
+          <button id="clearCompletedBtn" class="secondary-btn" type="button">Clear completed</button>
+        </div>
       </main>
     </div>
 
