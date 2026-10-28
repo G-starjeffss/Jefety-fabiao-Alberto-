@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>World Clock</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="header">
+        <p class="eyebrow">Global time</p>
+        <h1>World Clock</h1>
+      </header>
+
+      <main class="clock-grid">
+        <section class="clock-card primary-card">
+          <div class="card-label">Local time</div>
+          <div id="localTime" class="time-value">--:--:--</div>
+          <div id="localDate" class="date-value">Loading...</div>
+        </section>
+
+        <section class="clock-card">
+          <div class="card-label">UTC</div>
+          <div id="utcTime" class="time-value">--:--:--</div>
+          <div id="utcDate" class="date-value">Loading...</div>
+        </section>
+
+        <section class="clock-card">
+          <div class="card-label">New York</div>
+          <div id="newYorkTime" class="time-value">--:--:--</div>
+          <div id="newYorkDate" class="date-value">Loading...</div>
+        </section>
+
+        <section class="clock-card">
+          <div class="card-label">London</div>
+          <div id="londonTime" class="time-value">--:--:--</div>
+          <div id="londonDate" class="date-value">Loading...</div>
+        </section>
+
+        <section class="clock-card">
+          <div class="card-label">Dubai</div>
+          <div id="dubaiTime" class="time-value">--:--:--</div>
+          <div id="dubaiDate" class="date-value">Loading...</div>
+        </section>
+
+        <section class="clock-card">
+          <div class="card-label">Tokyo</div>
+          <div id="tokyoTime" class="time-value">--:--:--</div>
+          <div id="tokyoDate" class="date-value">Loading...</div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
