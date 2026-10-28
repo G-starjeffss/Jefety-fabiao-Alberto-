@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopWise | Task Manager</title>
+    <meta
+      name="description"
+      content="ShopWise is a local-first task manager for daily planning and business productivity."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-mark">S</div>
+          <div>
+            <p class="eyebrow">Business workflow</p>
+            <h1>ShopWise</h1>
+          </div>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+          Dark mode
+        </button>
+      </header>
+
+      <main class="panel">
+        <form id="todoForm" class="todo-form">
+          <label class="field task-field">
+            <span>Task</span>
+            <input id="taskInput" type="text" maxlength="140" placeholder="Add a new task..." autocomplete="off" required />
+          </label>
+
+          <label class="field">
+            <span>Priority</span>
+            <select id="prioritySelect">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Due date</span>
+            <input id="dueDateInput" type="date" />
+          </label>
+
+          <button class="primary-btn" type="submit">Add task</button>
+        </form>
+
+        <div class="toolbar">
+          <div class="stats">
+            <span><strong id="remainingCount">0</strong> remaining</span>
+            <span><strong id="completedCount">0</strong> completed</span>
+          </div>
+
+          <div class="filters" aria-label="Filter tasks">
+            <button class="filter-btn active" type="button" data-filter="all">All</button>
+            <button class="filter-btn" type="button" data-filter="active">Active</button>
+            <button class="filter-btn" type="button" data-filter="completed">Completed</button>
+          </div>
+        </div>
+
+        <div class="list-shell">
+          <ul id="todoList" class="todo-list" aria-live="polite"></ul>
+        </div>
+
+        <div class="footer-actions">
+          <button id="clearCompletedBtn" class="secondary-btn" type="button">Clear completed</button>
+        </div>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
