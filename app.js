@@ -1,27 +1,27 @@
 :root {
-  --bg: #081421;
-  --bg-soft: #0d1d2d;
-  --panel: rgba(12, 20, 33, 0.9);
+  --bg: #071b2b;
+  --bg-soft: #0e2438;
+  --panel: rgba(10, 22, 35, 0.9);
   --panel-border: rgba(148, 163, 184, 0.2);
   --text: #edf6ff;
   --muted: #a9bbcf;
-  --primary: #71e1b2;
-  --primary-strong: #45c98d;
+  --primary: #6fe2b1;
+  --primary-strong: #3cc58f;
   --warning: #f7c35b;
   --danger: #ff7d7d;
-  --shadow: 0 20px 50px rgba(2, 6, 23, 0.35);
-  --input-bg: rgba(15, 23, 42, 0.5);
+  --shadow: 0 20px 50px rgba(2, 6, 23, 0.38);
+  --input-bg: rgba(15, 23, 42, 0.52);
 }
 
 body.light {
-  --bg: #ebf4ff;
-  --bg-soft: #dfeaf9;
-  --panel: rgba(255, 255, 255, 0.9);
+  --bg: #edf7f2;
+  --bg-soft: #dfeef4;
+  --panel: rgba(255, 255, 255, 0.92);
   --panel-border: rgba(15, 23, 42, 0.08);
   --text: #162534;
   --muted: #53677c;
-  --primary: #168f64;
-  --primary-strong: #117456;
+  --primary: #178a61;
+  --primary-strong: #0f724b;
   --warning: #b67a00;
   --danger: #d84d4d;
   --shadow: 0 16px 45px rgba(15, 23, 42, 0.12);
@@ -39,7 +39,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(circle at top, rgba(113, 225, 178, 0.14), transparent 28%), linear-gradient(135deg, var(--bg), var(--bg-soft));
+  background: radial-gradient(circle at top, rgba(111, 226, 177, 0.14), transparent 30%), linear-gradient(135deg, var(--bg), var(--bg-soft));
   color: var(--text);
   font-family: Inter, "Segoe UI", sans-serif;
   transition: background 0.25s ease, color 0.25s ease;
@@ -61,8 +61,27 @@ select {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 14px;
   margin-bottom: 18px;
+}
+
+.brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--primary), #43aef5);
+  color: #08131d;
+  font-size: 1.4rem;
+  font-weight: 900;
+  box-shadow: inset 0 0 16px rgba(255,255,255,0.18);
 }
 
 .eyebrow {
@@ -185,8 +204,8 @@ select {
 
 .filter-btn.active {
   opacity: 1;
-  background: rgba(113, 225, 178, 0.12);
-  border-color: rgba(113, 225, 178, 0.45);
+  background: rgba(111, 226, 177, 0.12);
+  border-color: rgba(111, 226, 177, 0.45);
   color: var(--primary);
 }
 
@@ -279,7 +298,7 @@ select {
 }
 
 .priority-low {
-  background: rgba(113, 225, 178, 0.12);
+  background: rgba(111, 226, 177, 0.12);
   color: var(--primary);
 }
 

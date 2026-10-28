@@ -1,204 +1,505 @@
-const STORAGE_KEY = 'todoflow.tasks.v1';
+# ShopWise Task Manager
 
-const todoForm = document.getElementById('todoForm');
-const taskInput = document.getElementById('taskInput');
-const prioritySelect = document.getElementById('prioritySelect');
-const dueDateInput = document.getElementById('dueDateInput');
-const todoList = document.getElementById('todoList');
-const remainingCount = document.getElementById('remainingCount');
-const completedCount = document.getElementById('completedCount');
-const clearCompletedBtn = document.getElementById('clearCompletedBtn');
-const themeToggle = document.getElementById('themeToggle');
-const filterButtons = document.querySelectorAll('.filter-btn');
+ShopWise is a clean, responsive task manager built for everyday planning and business productivity. It stores all tasks locally in the browser using `localStorage`, so your tasks remain available without a backend or fake cloud syncing.
 
-let currentFilter = 'all';
+## Features
 
-function getTasks() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (!saved) return [];
+- Add tasks with title, priority, and due date
+- Mark tasks as complete or incomplete
+- Delete tasks individually
+- Filter tasks by all, active, or completed
+- Clear completed tasks
+- Local storage persistence
+- Light/dark theme toggle
+- Mobile-friendly responsive layout
 
-  try {
-    const parsed = JSON.parse(saved);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (error) {
-    console.error('Failed to parse tasks from local storage:', error);
-    return [];
-  }
-}
+## Run locally
 
-function saveTasks(tasks) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-}
+Open `index.html` in a browser, or serve the project from the repository root:
 
-function createId() {
-  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-}
+```bash
+python3 -m http.server 8000
+```
 
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
+Then open:
 
-function formatDate(dateString) {
-  if (!dateString) return 'No due date';
+```text
+http://localhost:8000
+```
 
-  const date = new Date(`${dateString}T00:00:00`);
-  if (Number.isNaN(date.getTime())) return 'No due date';
+## Notes
 
-  return new Intl.DateTimeFormat('en-US', {
-    month: 'short',
-    day: 'numeric'
-  }).format(date);
-}
+This app is intentionally local-first. It is designed to work without cloud sync, authentication, or a backend.
 
-function getVisibleTasks() {
-  const tasks = getTasks();
+## App name
 
-  if (currentFilter === 'active') {
-    return tasks.filter((task) => !task.completed);
-  }
+ShopWise
 
-  if (currentFilter === 'completed') {
-    return tasks.filter((task) => task.completed);
-  }
 
-  return tasks;
-}
 
-function updateCounts() {
-  const tasks = getTasks();
-  const remaining = tasks.filter((task) => !task.completed).length;
-  const completed = tasks.filter((task) => task.completed).length;
 
-  remainingCount.textContent = String(remaining);
-  completedCount.textContent = String(completed);
-}
 
-function renderTasks() {
-  const tasks = getVisibleTasks();
 
-  if (!tasks.length) {
-    todoList.innerHTML = '<li class="empty-state">No tasks yet. Add your first task above.</li>';
-  } else {
-    todoList.innerHTML = tasks
-      .map(
-        (task) => `
-          <li class="todo-item ${task.completed ? 'completed' : ''}" data-id="${task.id}">
-            <button class="check-btn" type="button" data-action="toggle" data-id="${task.id}" aria-label="Toggle task completion"></button>
 
-            <div class="task-main">
-              <div class="task-text">${escapeHtml(task.text)}</div>
-              <div class="task-meta">
-                <span class="priority-badge priority-${task.priority || 'medium'}">${task.priority || 'medium'}</span>
-                <span>Due ${formatDate(task.dueDate)}</span>
-              </div>
-            </div>
 
-            <button class="delete-btn" type="button" data-action="delete" data-id="${task.id}">Delete</button>
-          </li>
-        `
-      )
-      .join('');
-  }
 
-  filterButtons.forEach((button) => {
-    button.classList.toggle('active', button.dataset.filter === currentFilter);
-  });
 
-  updateCounts();
-}
 
-function addTask(event) {
-  event.preventDefault();
 
-  const text = taskInput.value.trim();
-  if (!text) {
-    taskInput.focus();
-    return;
-  }
 
-  const tasks = getTasks();
-  tasks.unshift({
-    id: createId(),
-    text,
-    priority: prioritySelect.value,
-    dueDate: dueDateInput.value,
-    completed: false,
-    createdAt: new Date().toISOString()
-  });
 
-  saveTasks(tasks);
-  todoForm.reset();
-  prioritySelect.value = 'medium';
-  renderTasks();
-  taskInput.focus();
-}
 
-function toggleTask(taskId) {
-  const tasks = getTasks();
-  const task = tasks.find((item) => item.id === taskId);
-  if (!task) return;
 
-  task.completed = !task.completed;
-  saveTasks(tasks);
-  renderTasks();
-}
 
-function deleteTask(taskId) {
-  const tasks = getTasks().filter((task) => task.id !== taskId);
-  saveTasks(tasks);
-  renderTasks();
-}
 
-function clearCompleted() {
-  const tasks = getTasks().filter((task) => !task.completed);
-  saveTasks(tasks);
-  renderTasks();
-}
 
-function setFilter(filterName) {
-  currentFilter = filterName;
-  renderTasks();
-}
 
-function applySavedTheme() {
-  const storedTheme = localStorage.getItem('todoflow.theme');
-  const useLightTheme = storedTheme === 'light';
-  document.body.classList.toggle('light', useLightTheme);
-  themeToggle.textContent = useLightTheme ? 'Light mode' : 'Dark mode';
-}
 
-function toggleTheme() {
-  const isLight = document.body.classList.contains('light');
-  document.body.classList.toggle('light', !isLight);
-  localStorage.setItem('todoflow.theme', !isLight ? 'light' : 'dark');
-  themeToggle.textContent = !isLight ? 'Light mode' : 'Dark mode';
-}
 
-todoForm.addEventListener('submit', addTask);
 
-todoList.addEventListener('click', (event) => {
-  const target = event.target.closest('[data-action]');
-  if (!target) return;
 
-  const { action, id } = target.dataset;
-  if (action === 'toggle') toggleTask(id);
-  if (action === 'delete') deleteTask(id);
-});
 
-clearCompletedBtn.addEventListener('click', clearCompleted);
 
-filterButtons.forEach((button) => {
-  button.addEventListener('click', () => setFilter(button.dataset.filter));
-});
 
-themeToggle.addEventListener('click', toggleTheme);
 
-window.addEventListener('storage', renderTasks);
 
-applySavedTheme();
-renderTasks();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"}]} one more time to ensure final repo state.  苹果手机

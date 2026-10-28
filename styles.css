@@ -3,16 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TodoFlow</title>
-    <meta name="description" content="TodoFlow is a local-first to-do list app with filtering, priorities, due dates, and local storage support." />
+    <title>ShopWise | Task Manager</title>
+    <meta name="description" content="ShopWise is a local-first task manager for managing daily priorities, business tasks, and personal to-dos." />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="app-shell">
       <header class="topbar">
-        <div>
-          <p class="eyebrow">Personal productivity</p>
-          <h1>TodoFlow</h1>
+        <div class="brand-wrap">
+          <div class="brand-mark">S</div>
+          <div>
+            <p class="eyebrow">Business workflow</p>
+            <h1>ShopWise</h1>
+          </div>
         </div>
         <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">
           Dark mode
